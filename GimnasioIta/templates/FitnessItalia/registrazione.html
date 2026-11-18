@@ -1,0 +1,25 @@
+{% extends 'FitnessItalia/base.html' %}
+
+{% block title %}FitnessPlus Italia - Registrazione{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-7">
+        <div class="card shadow p-4 bg-white">
+            <h3 class="mb-3">Registrazione nuovo cliente</h3>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <h5>Dati di accesso</h5>
+                {{ user_form.as_p }}
+
+                <h5 class="mt-4">Dati del cliente</h5>
+                {{ cliente_form.as_p }}
+
+                <button type="submit" class="btn btn-primary w-100">Registrati</button>
+            </form>
+            <a href="{% url 'login' %}" class="btn btn-secondary mt-3 w-100">Ho già un account</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

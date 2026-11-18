@@ -1,0 +1,49 @@
+{% extends 'FitnessItalia/base.html' %}
+
+{% block title %}FitnessPlus Italia - Elenco Servizi{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Le nostre lezioni personalizzate</h2>
+    {% if user.is_staff %}
+    <a href="{% url 'crea_servizio' %}" class="btn btn-success">Aggiungi Nuovo Servizio</a>
+    {% elif user.is_authenticated %}
+    <a href="{% url 'crea_prenotazione' %}" class="btn btn-primary">Prenota una lezione</a>
+    {% else %}
+    <a href="{% url 'login' %}" class="btn btn-outline-dark">Accedi per prenotare</a>
+    {% endif %}
+</div>
+<table class="table table-striped table-hover shadow bg-white">
+    <thead class="table-dark">
+        <tr>
+            <th>Disciplina</th>
+            <th>Istruttore</th>
+            <th>Descrizione</th>
+            <th>Prezzo</th>
+            {% if user.is_staff %}
+            <th>Azioni</th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for s in servizi %}
+        <tr>
+            <td>{{ s.nome }}</td>
+            <td>{{ s.istruttore }}</td>
+            <td>{{ s.descrizione }}</td>
+            <td>€ {{ s.prezzo }}</td>
+            {% if user.is_staff %}
+            <td>
+                <a href="{% url 'modifica_servizio' s.pk %}" class="btn btn-warning btn-sm">Modifica</a>
+                <a href="{% url 'elimina_servizio' s.pk %}" class="btn btn-danger btn-sm">Elimina</a>
+            </td>
+            {% endif %}
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5" class="text-center text-muted">Nessun servizio registrato al momento.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

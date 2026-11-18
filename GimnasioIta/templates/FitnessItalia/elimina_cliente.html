@@ -1,0 +1,20 @@
+{% extends 'FitnessItalia/base.html' %}
+
+{% block title %}FitnessPlus Italia - Elimina Cliente{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card shadow p-4 bg-white text-center">
+            <h3 class="text-danger mb-3">Conferma Eliminazione</h3>
+            <p class="lead">Sei sicuro di voler eliminare il cliente <strong>{{ cliente.nombre }} {{ cliente.apellido }}</strong>?</p>
+            
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger w-100 mb-2">Sì, Elimina</button>
+                <a href="{% url 'lista_clienti' %}" class="btn btn-secondary w-100">Annulla</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'FitnessItalia/base.html' %}
+
+{% block title %}FitnessPlus Italia - Elenco Clienti{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Elenco Clienti - FitnessPlus Italia</h2>
+    <a href="{% url 'crea_cliente' %}" class="btn btn-success">Aggiungi Nuovo Cliente</a>
+</div>
+<table class="table table-striped table-hover shadow bg-white">
+    <thead class="table-dark">
+        <tr>
+            <th>Codice Fiscale</th>
+            <th>Nome</th>
+            <th>Cognome</th>
+            <th>Telefono</th>
+            <th>Email</th>
+            <th>Azioni</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for c in clienti %}
+        <tr>
+            <td>{{ c.rut }}</td>
+            <td>{{ c.nombre }}</td>
+            <td>{{ c.apellido }}</td>
+            <td>{{ c.telefono }}</td>
+            <td>{{ c.email }}</td>
+            <td>
+                <a href="{% url 'modifica_cliente' c.pk %}" class="btn btn-warning btn-sm">Modifica</a>
+                <a href="{% url 'elimina_cliente' c.pk %}" class="btn btn-danger btn-sm">Elimina</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6" class="text-center text-muted">Nessun cliente registrato al momento.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

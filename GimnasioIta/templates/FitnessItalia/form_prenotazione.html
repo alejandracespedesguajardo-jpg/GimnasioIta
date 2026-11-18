@@ -1,0 +1,22 @@
+{% extends 'FitnessItalia/base.html' %}
+
+{% block title %}FitnessPlus Italia - Prenota una lezione{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow p-4 bg-white">
+            <h3 class="mb-3">Prenota una lezione</h3>
+            {% if errore %}
+            <div class="alert alert-danger">{{ errore }}</div>
+            {% endif %}
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary w-100">Conferma prenotazione</button>
+            </form>
+            <a href="{% url 'mie_prenotazioni' %}" class="btn btn-secondary mt-3 w-100">Torna Indietro</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

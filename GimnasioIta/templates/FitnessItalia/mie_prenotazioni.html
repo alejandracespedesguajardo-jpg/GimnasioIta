@@ -1,0 +1,53 @@
+{% extends 'FitnessItalia/base.html' %}
+
+{% block title %}FitnessPlus Italia - Le mie prenotazioni{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Le mie prenotazioni</h2>
+    <a href="{% url 'crea_prenotazione' %}" class="btn btn-success">+ Prenota una lezione</a>
+</div>
+<table class="table table-striped table-hover shadow bg-white">
+    <thead class="table-dark">
+        <tr>
+            <th>Disciplina</th>
+            <th>Istruttore</th>
+            <th>Data</th>
+            <th>Ora</th>
+            <th>Prezzo</th>
+            <th>Stato</th>
+            <th>Azioni</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in prenotazioni %}
+        <tr>
+            <td>{{ p.servizio.nome }}</td>
+            <td>{{ p.servizio.istruttore }}</td>
+            <td>{{ p.fecha_clase|date:"d/m/Y" }}</td>
+            <td>{{ p.hora_clase|time:"H:i" }}</td>
+            <td>€ {{ p.servizio.prezzo }}</td>
+            <td>
+                {% if p.estado == 'Confermata' %}
+                <span class="badge bg-success">{{ p.estado }}</span>
+                {% else %}
+                <span class="badge bg-secondary">{{ p.estado }}</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if p.estado == 'Confermata' %}
+                <form method="post" action="{% url 'annulla_prenotazione' p.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm">Annulla</button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="7" class="text-center text-muted">Non hai ancora prenotazioni.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

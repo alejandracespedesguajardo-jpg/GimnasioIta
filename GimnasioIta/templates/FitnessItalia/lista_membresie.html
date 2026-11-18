@@ -1,0 +1,31 @@
+{% extends 'FitnessItalia/base.html' %}
+
+{% block title %}FitnessPlus Italia - Abbonamenti{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Elenco Abbonamenti e Membresie</h2>
+</div>
+<table class="table table-striped table-hover shadow bg-white">
+    <thead class="table-dark">
+        <tr>
+            <th>Tipo di Abbonamento</th>
+            <th>Durata (Mesi)</th>
+            <th>Prezzo</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for m in membresie %}
+        <tr>
+            <td>{{ m.nombre }}</td>
+            <td>{{ m.duracion_meses }} mesi</td>
+            <td>€ {{ m.precio }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3" class="text-center text-muted">Nessun abbonamento disponibile al momento.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
